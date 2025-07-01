@@ -1,0 +1,15 @@
+GET http://localhost:4000/api/users
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzUxMzc3MTUwLCJleHAiOjE3NTEzNzcxNjV9.vcjviJYx9wyWeU18mgipURAFsUBYj2UuenPjR1gaNlI
+
+####
+
+POST http://localhost:4000/api/token
+Content-Type: application/json
+
+{
+    "refreshToken" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzUxMzc3ODk5fQ.sSay7MA-QCsWI8F1qc4PFGunbtaa37pjNt61G1uf2Sg"
+}
+
+####
+
+POST http://localhost:4000/api/login/charbel@something.com

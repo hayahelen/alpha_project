@@ -1,0 +1,8 @@
+change naming convention
+userRepo.... done
+`user` in the pg 
+
+migrations-> fix the mumbers and alter table to remove the null values done
+
+soft delete instead of delete is_active = false done
+fix error handling -> send to the pg (single function)
