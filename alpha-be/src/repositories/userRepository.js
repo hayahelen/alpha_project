@@ -30,13 +30,13 @@ export const userRepository = {
     },
 
   
-    async create({ firstName, lastName, email, password, refreshToken }) {
+    async create({ firstName, lastName, email, password }) {
         const res = await query(
         `INSERT INTO "user" 
-        (firstName, lastName, email, password, refreshToken)
-        VALUES ($1,$2,$3,$4, $5)
+        (firstName, lastName, email, password)
+        VALUES ($1,$2,$3,$4)
         RETURNING *`,
-        [firstName, lastName, email, password, refreshToken]
+        [firstName, lastName, email, password]
         );
         return res.rows[0];
     },
