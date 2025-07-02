@@ -12,6 +12,8 @@ export const userRepository = {
     },
     
     async getByEmail(email) {
+        console.log("EMAIL QUERY", email)
+
         const res = await query(
         `SELECT * FROM "user" WHERE email = $1 and isActive = true`,
         [email]
@@ -65,16 +67,15 @@ export const userRepository = {
         },
 
 
-    async findByRefreshToken(refreshToken) {
+    async getByRefreshToken(refreshToken) {
+        console.log("QUERY DATA", refreshToken)
         const res = await query(
-             `SELECT * FROM "user" WHERE refreshToken = $1 and isActive = true`,
+             `SELECT * FROM "user" WHERE refreshToken = $1 AND isActive = true`,
         [refreshToken]
         );
         return res.rows[0];
     }
 
-//findbyrefreshtoken in case of accesstoken being expired 
-//accesstoken is never saved
 //refreshtoken is usually hashed --> hashing
 
 

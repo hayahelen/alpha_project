@@ -1,13 +1,23 @@
 GET http://localhost:4000/api/users
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzUxMzc3MTUwLCJleHAiOjE3NTEzNzcxNjV9.vcjviJYx9wyWeU18mgipURAFsUBYj2UuenPjR1gaNlI
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzUxNDM1NDM2LCJleHAiOjE3NTE0MzU0NjZ9.CIuIFIChY81KiPUL6Zt8PzqcojD14i8SfmAeM7k18Bk
 
-####
+
+###
+
+DELETE http://localhost:4000/api/logout
+Content-Type: application/json
+
+{
+    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzUxNDM1NDM2LCJleHAiOjE3NTE0MzU0OTZ9.-_j5iyFBn_ZOzGeGmOADdKxlk382Aj36Up1Zi0A8_Uw"
+}
+
+###
 
 POST http://localhost:4000/api/token
 Content-Type: application/json
 
 {
-    "refreshToken" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzUxMzc3ODk5fQ.sSay7MA-QCsWI8F1qc4PFGunbtaa37pjNt61G1uf2Sg"
+    "refreshToken" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzUxNDM1NzM5LCJleHAiOjE3NTE0MzU3OTl9.A4pZdXQjwbEJPsAIdLca5vh5LPo_p70YjM3GdTjw1u0"
 }
 
 ####

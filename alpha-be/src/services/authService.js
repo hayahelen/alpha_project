@@ -1,3 +1,4 @@
+import { json } from "express";
 import { userRepository } from "../repositories/userRepository.js";
 
 export const authService = {
@@ -7,11 +8,13 @@ export const authService = {
 
     async login(email) {
          return userRepository.getByEmail(email);
+
     },
 
-    async findRefreshToken(refreshToken) {
-        return userRepository.findByRefreshToken(refreshToken)
+    async getByRefreshToken(refreshToken) {
+        return userRepository.getByRefreshToken(refreshToken)
     }
+
 
 }
 
