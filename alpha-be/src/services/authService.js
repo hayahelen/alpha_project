@@ -56,13 +56,11 @@ export const authService = {
     return jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
         if (err) return err
         const accessToken = generateAccessToken(userId)
-        console.log("ACCESSSSSSSSSS", accessToken)
         return {accessToken: accessToken}
     })
 
 },
     async logout(refreshToken) {
-    console.log("PPPPP", refreshToken)
     const user = await userRepository.getByRefreshToken(refreshToken);
     const nullToken = {refreshToken: null};
         console.log("USER", user);
