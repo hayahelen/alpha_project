@@ -1,10 +1,5 @@
 import { authService } from "../services/authService.js";
 import env from 'dotenv';
-import jwt from 'jsonwebtoken'
-import generateAccessToken from "../middleware/generateAccessToken.js";
-import { userService } from "../services/userService.js";
-import { userRepository } from "../repositories/userRepository.js";
-
 
 env.config();
 
@@ -20,6 +15,7 @@ function errorHandler (controller) {
 
 export const authController = {
     register: errorHandler(async (req,res) => {
+
         const user = await authService.register(req.body);
         res.status(201).json(user)
     }),
@@ -30,6 +26,7 @@ export const authController = {
         
         const email = req.body.email
         const password = req.body.password
+
 
         //here 3am neb3ato to the login where fi a findbyemail
         const user = await authService.login(email, password)

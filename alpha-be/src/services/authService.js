@@ -3,20 +3,31 @@ import { userRepository } from "../repositories/userRepository.js";
 import jwt from 'jsonwebtoken'
 import generateAccessToken from "../middleware/generateAccessToken.js";
 import { userService } from "../services/userService.js";
-import errorHandler from "../middleware/errorHandler.js";
+import bcrypt from 'bcrypt'
+
 
 
 export const authService = {
     async register(data) {
+        //storing them here for easiness
+        const email = data.email
+        const password = data.password
+
+        const hashed_password = await bcrypt.hash(data.password, 13)
+        data.password = hashed_password
         const user = await userRepository.create(data);
-        return this.login(user.email, user.password)
+
+        return this.login(email, password)
     },
 
     async login(email, password) {
 
-         const user = await userRepository.getByEmail(email);
-         if (password !== user.password) throw new Error("Invalid Credentials!");
-         ;
+        const user = await userRepository.getByEmail(email);
+        const isValidPassword = await bcrypt.compare(password, user.password)
+
+         if (!user || !isValidPassword) {
+            throw new Error("Invalid Credentials!")
+         }
          
          const userId = {id: user.id}
          console.log("USER-ID", userId)
@@ -51,13 +62,12 @@ export const authService = {
 
 },
     async logout(refreshToken) {
-
-    const user = await userRepository.getByRefreshToken(refreshToken)
-    const nullToken = {refreshToken: null}
-
-
-    const logout_user = await userRepository.update(user.id, nullToken)
-    console.log("NULLIFIED REFRESH-TOKEN",logout_user)
+    console.log("PPPPP", refreshToken)
+    const user = await userRepository.getByRefreshToken(refreshToken);
+    const nullToken = {refreshToken: null};
+        console.log("USER", user);
+    const logout_user = await userRepository.update(user.id, nullToken);
+    console.log("NULLIFIED REFRESH-TOKEN",logout_user);
     return logout_user
 
     }
