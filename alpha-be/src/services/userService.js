@@ -12,11 +12,10 @@ export const userService = {
   async getByEmail(email) {
     return userRepository.getByEmail(email);
   },
-    
+
   async create(data) {
     return userRepository.create(data);
   },
-
 
   async update(id, fields) {
     return userRepository.update(id, fields);
@@ -24,5 +23,5 @@ export const userService = {
 
   async delete(id) {
     return userRepository.delete(id);
-  }
+  },
 };

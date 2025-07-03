@@ -1,14 +1,14 @@
 GET http://localhost:4000/api/users
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjgsImlhdCI6MTc1MTQ1ODg0MSwiZXhwIjoxNzUxNDU4ODcxfQ.mL7MlPkbyn9MwwLs7YYA4VArZB2Etqrevwa9UShOBUI
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzQsImlhdCI6MTc1MTUzNzg3NCwiZXhwIjoxNzUxNTM3OTA0fQ.aRPBR6ZF5iI7TTsm0AROEgz48sjKGhsw_ja52ofcpRw
 
 ###
 
 DELETE http://localhost:4000/api/logout
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjksImlhdCI6MTc1MTQ1OTAzNCwiZXhwIjoxNzUxNDU5MDY0fQ.3GRpOf5okniC5XnFpDFObXCFJXeBGUI2u3e_fGgQeB0
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzAsImlhdCI6MTc1MTQ1OTU0MSwiZXhwIjoxNzUxNDU5NTcxfQ.iTwbWVtJOWiquxbI6lA4TCJFnRMSKrVuzcVnDzHtDa0
 Content-Type: application/json
 
 {
-    "refreshToken" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjksImlhdCI6MTc1MTQ1OTAzNCwiZXhwIjoxNzU0MDUxMDM0fQ.fF29xCCPmv1vSFH_ywXWEAz99y_seMH6iPoJ6-IBnqE"
+    "refreshToken" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzQsImlhdCI6MTc1MTUzNzY1MCwiZXhwIjoxNzU0MTI5NjUwfQ.olZQNCX0o9LYLy5UP-NpqwlALGE79IvjNOOuV5JjGZo"
 }
 
 ###
@@ -17,7 +17,7 @@ POST http://localhost:4000/api/token
 Content-Type: application/json
 
 {
-    "refreshToken" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjgsImlhdCI6MTc1MTQ1ODc5OSwiZXhwIjoxNzU0MDUwNzk5fQ.acgOAKAO3UOPsIKVgJxF8P_AnYh8J9lz--5AWbGEmNM"
+    "refreshToken" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzQsImlhdCI6MTc1MTUzNzY1MCwiZXhwIjoxNzU0MTI5NjUwfQ.olZQNCX0o9LYLy5UP-NpqwlALGE79IvjNOOuV5JjGZo"
 }
 
 ####
@@ -26,7 +26,7 @@ POST http://localhost:4000/api/login
 Content-Type:  application/json
 
 {
-    "email": "jane@something.com",
+    "email": "yara@something.com",
     "password" : "pass"
 }
 
@@ -37,8 +37,8 @@ POST http://localhost:4000/api/register
 Content-Type: application/json
 
 {
-    "firstName": "jane",
+    "firstName": "yara",
     "lastName" : "AR",
-    "email": "jane@something.com",
+    "email": "yara@something.com",
     "password": "pass"
 }

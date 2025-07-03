@@ -1,59 +1,37 @@
 import { authService } from "../services/authService.js";
-import env from 'dotenv';
+import env from "dotenv";
+import errorHandling from "../utils/errorHandling.js";
 
 env.config();
 
-function errorHandler (controller) {
-    return async (req,res,next) => {
-        try {
-           await controller (req, res, next)
-
-        } catch(err) { return next(err)}
-    }
-}
-
-
 export const authController = {
-    register: errorHandler(async (req,res) => {
+  register: errorHandling(async (req, res) => {
+    const user = await authService.register(req.body);
+    res.status(201).json(user);
+  }),
 
-        const user = await authService.register(req.body);
-        res.status(201).json(user)
-    }),
+  login: errorHandling(async (req, res) => {
+    const email = req.body.email;
+    const password = req.body.password;
 
+    const user = await authService.login(email, password);
+    res.json(user);
+  }),
 
-    login: errorHandler(async (req, res) => {
-        //3am nol2at the email here (from params)
-        
-        const email = req.body.email
-        const password = req.body.password
+  refreshToken: errorHandling(async (req, res) => {
+    const refreshToken = req.body.refreshToken;
+    const user = await authService.refreshAccessToken(refreshToken);
 
+    if (refreshToken == null) return res.sendStatus(401);
+    if (user == null) return res.sendStatus(403);
+    res.json(user);
+  }),
 
-        //here 3am neb3ato to the login where fi a findbyemail
-        const user = await authService.login(email, password)
-        res.json(user)
-        
-       
-    }),
+  logout: errorHandling(async (req, res) => {
+    const refreshToken = req.body.refreshToken;
+    const user = await authService.logout(refreshToken);
 
-    refreshToken: errorHandler(async (req, res) => {
-
-    //aam nol2at the refreshToken wnebaato lal backend
-    const refreshToken = req.body.refreshToken
-    const user = await authService.refreshAccessToken(refreshToken)
-
-    if (refreshToken == null) return res.sendStatus(401)
-    if (user == null) return res.sendStatus(403)
-    res.json(user)
-
-
-}),
-
-logout: errorHandler(async(req,res) => {
-
-    const refreshToken = req.body.refreshToken
-    const user = await authService.logout(refreshToken)
-
-    console.log("LOGGED OUT" , user)
-    res.sendStatus(204)
-})
-}
+    console.log("LOGGED OUT", user);
+    res.sendStatus(204);
+  }),
+};
