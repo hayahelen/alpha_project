@@ -44,6 +44,7 @@ export const authService = {
 
   async refreshAccessToken(refreshToken) {
     const user = await userRepository.getByRefreshToken(refreshToken);
+    console.log("USER", user)
     const userId = { id: user.id };
 
     //verification

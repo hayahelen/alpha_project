@@ -24,13 +24,13 @@ export const userRepository = {
     return res.rows[0];
   },
 
-  async create({ firstName, lastName, email, password }) {
+  async create({ firstName, lastName, email, password, merchantId }) {
     const res = await query(
       `INSERT INTO "user" 
-        (firstName, lastName, email, password)
-        VALUES ($1,$2,$3,$4)
+        (firstName, lastName, email, password, merchantId)
+        VALUES ($1,$2,$3,$4, $5)
         RETURNING *`,
-      [firstName, lastName, email, password]
+      [firstName, lastName, email, password, merchantId]
     );
     return res.rows[0];
   },
@@ -67,6 +67,14 @@ export const userRepository = {
     const res = await query(
       `SELECT * FROM "user" WHERE refreshToken = $1 AND isActive = true`,
       [refreshToken]
+    );
+    return res.rows[0];
+  },
+
+  async getByMerchantId(merchantId) {
+    const res = await query(
+      `SELECT * FROM "user" WHERE merchantId = $1 AND isActive = true`,
+      [merchantId]
     );
     return res.rows[0];
   },

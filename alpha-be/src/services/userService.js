@@ -1,4 +1,5 @@
 import { userRepository } from "../repositories/userRepository.js";
+import bcrypt from "bcrypt";
 
 export const userService = {
   async getAll() {
@@ -14,6 +15,9 @@ export const userService = {
   },
 
   async create(data) {
+    const password = data.password;
+    const hashed_password = await bcrypt.hash(data.password, 13);
+    data.password = hashed_password;
     return userRepository.create(data);
   },
 

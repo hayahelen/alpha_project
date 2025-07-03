@@ -6,7 +6,7 @@ env.config();
 const generateTokens = {
   generateAccessToken: (userId) => {
     return jwt.sign(userId, process.env.ACCESS_TOKEN_SECRET, {
-      expiresIn: "30s",
+      expiresIn: "10m",
     });
   },
   generateRefreshToken: (userId) => {
