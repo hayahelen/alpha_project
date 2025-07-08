@@ -17,3 +17,13 @@ routes:
 /roles/:id/permissions -> permissions by id 
 
 
+
+
+.gitignore
+
+password handling and update handling change naming of file
+permissionIds not permissionsId
+middleware called permit that takes as parameters multiple permissions 
+
+status code if no permission, and if permission call next()
+

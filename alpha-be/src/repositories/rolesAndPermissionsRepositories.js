@@ -32,6 +32,7 @@ export const rolesAndPermissionsRepository = {
 
     return res;
   },
+// clean this up
 
   async updatePermission(roleId, permissionId) {
     await query("BEGIN");
