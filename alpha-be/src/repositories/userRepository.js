@@ -1,16 +1,44 @@
 import { query } from "../db.js";
+import updateHandling from "../utils/updateHandling.js";
 
 export const userRepository = {
   async getAll() {
     const res = await query(
-      `SELECT * FROM "user" WHERE isActive = true ORDER BY id `
+      `SELECT 
+          usr.id AS id,
+          usr.firstName,
+          usr.lastName,
+          usr.email,
+          usr.password,
+          usr.isActive,
+          usr.createdAt,
+          usr.updatedAt,
+          merchant.id AS merchantId,
+          usr.roleId
+        FROM "user" usr
+        INNER JOIN merchant ON usr.merchantId = merchant.id AND merchant.isActive = true
+        WHERE usr.isActive = true
+        ORDER BY usr.id;`
     );
     return res.rows;
   },
-
+  //do the same for others
   async getByEmail(email) {
     const res = await query(
-      `SELECT * FROM "user" WHERE email = $1 and isActive = true`,
+      `SELECT 
+          usr.id AS id,
+          usr.firstName,
+          usr.lastName,
+          usr.email,
+          usr.password,
+          usr.isActive,
+          usr.createdAt,
+          usr.updatedAt,
+          merchant.id AS merchantId,
+          usr.roleId 
+        FROM "user" usr
+        INNER JOIN merchant ON usr.merchantId = merchant.id AND merchant.isActive = true
+        WHERE usr.email = $1 AND usr.isActive = true;`,
       [email]
     );
     return res.rows[0];
@@ -18,33 +46,43 @@ export const userRepository = {
 
   async getById(id) {
     const res = await query(
-      `SELECT * FROM "user" WHERE id = $1 and isActive = true`,
+      `SELECT 
+          usr.id AS id,
+          usr.firstName,
+          usr.lastName,
+          usr.email,
+          usr.password,
+          usr.isActive,
+          usr.createdAt,
+          usr.updatedAt,
+          merchant.id AS merchantId,
+          usr.roleId  
+        FROM "user" usr
+        INNER JOIN merchant ON usr.merchantId = merchant.id AND merchant.isActive = true
+        WHERE usr.id = $1 AND usr.isActive = true;`,
       [id]
     );
     return res.rows[0];
   },
 
-  async create({ firstName, lastName, email, password, merchantId }) {
+  async create({ firstName, lastName, email, password, merchantId, roleId }) {
     const res = await query(
       `INSERT INTO "user" 
-        (firstName, lastName, email, password, merchantId)
-        VALUES ($1,$2,$3,$4, $5)
+        (firstName, lastName, email, password, merchantId, roleId)
+        VALUES ($1,$2,$3,$4, $5, $6)
         RETURNING *`,
-      [firstName, lastName, email, password, merchantId]
+      [firstName, lastName, email, password, merchantId, roleId]
     );
     return res.rows[0];
   },
 
   async update(id, fields) {
-    const fieldNames = Object.keys(fields);
-    const setQuery = fieldNames
-      .map((field, index) => `${field} = $${index + 2}`)
-      .join(", ");
-    const values = [id, ...fieldNames.map((field) => fields[field])];
     const res = await query(
-      `UPDATE "user" SET ${setQuery}, updatedAt = CURRENT_TIMESTAMP
+      `UPDATE "user" SET ${updateHandling.setQuery(
+        fields
+      )}, updatedAt = CURRENT_TIMESTAMP
             WHERE id = $1 RETURNING *`,
-      values
+      updateHandling.values(id, fields)
     );
 
     return res.rows[0];

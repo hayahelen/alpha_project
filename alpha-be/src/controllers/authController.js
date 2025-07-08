@@ -13,6 +13,7 @@ export const authController = {
   login: errorHandling(async (req, res) => {
     const email = req.body.email;
     const password = req.body.password;
+    console.log("EMAIL and PASS", email, password);
 
     const user = await authService.login(email, password);
     res.json(user);

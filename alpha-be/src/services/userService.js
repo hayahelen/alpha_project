@@ -1,5 +1,6 @@
 import { userRepository } from "../repositories/userRepository.js";
 import bcrypt from "bcrypt";
+import passwordHandling from "../utils/passwordHandling.js";
 
 export const userService = {
   async getAll() {
@@ -15,14 +16,14 @@ export const userService = {
   },
 
   async create(data) {
-    const password = data.password;
-    const hashed_password = await bcrypt.hash(data.password, 13);
-    data.password = hashed_password;
-    return userRepository.create(data);
+    const createdData = await passwordHandling(data);
+    return userRepository.create(createdData);
   },
 
   async update(id, fields) {
-    return userRepository.update(id, fields);
+    const updatedFields = await passwordHandling(fields);
+    console.log("updated fields: ", updatedFields)
+    return userRepository.update(id, updatedFields);
   },
 
   async delete(id) {

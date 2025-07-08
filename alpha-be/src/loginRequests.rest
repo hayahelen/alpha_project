@@ -4,7 +4,7 @@ DELETE http://localhost:4000/api/logout
 Content-Type: application/json
 
 {
-    "refreshToken" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NDEsImlhdCI6MTc1MTU2NzY4MiwiZXhwIjoxNzU0MTU5NjgyfQ.BwZku3IrwmZ5eSZMy4yx9wX0k9tmV-zMxuHUdL4EWhs"
+    "refreshToken" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjAsImlhdCI6MTc1MTg4MzgyOCwiZXhwIjoxNzU0NDc1ODI4fQ.06hwskEPVsMbiGq-rAeT8fie0xVK7MqfyGlcEqEVYYk"
 }
 
 ###
@@ -13,7 +13,7 @@ POST http://localhost:4000/api/token
 Content-Type: application/json
 
 {
-    "refreshToken" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NDEsImlhdCI6MTc1MTU2NzY4MiwiZXhwIjoxNzU0MTU5NjgyfQ.BwZku3IrwmZ5eSZMy4yx9wX0k9tmV-zMxuHUdL4EWhs"
+    "refreshToken" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjAsImlhdCI6MTc1MTg4MzgyOCwiZXhwIjoxNzU0NDc1ODI4fQ.06hwskEPVsMbiGq-rAeT8fie0xVK7MqfyGlcEqEVYYk"
 }
 
 ####
@@ -22,8 +22,8 @@ POST http://localhost:4000/api/login
 Content-Type:  application/json
 
 {
-    "email": "elie@something.com",
-    "password" : "password1"
+    "email": "yes@something.com",
+    "password" : "password"
 }
 
 
@@ -33,8 +33,9 @@ POST http://localhost:4000/api/register
 Content-Type: application/json
 
 {
-    "firstName": "",
-    "lastName" : "",
-    "email": "",
-    "password": ""
+    "firstName": "yes",
+    "lastName" : "ar",
+    "email": "yes@something.com",
+    "password": "password",
+    "merchantId": 2
 }

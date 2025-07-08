@@ -3,6 +3,7 @@ import { userRepository } from "../repositories/userRepository.js";
 import jwt from "jsonwebtoken";
 import generateTokens from "../utils/generateTokens.js";
 import { userService } from "../services/userService.js";
+import passwordHandling from "../utils/passwordHandling.js";
 import bcrypt from "bcrypt";
 
 export const authService = {
@@ -10,16 +11,20 @@ export const authService = {
     //storing them here for easiness
     const email = data.email;
     const password = data.password;
-
-    const hashed_password = await bcrypt.hash(data.password, 13);
-    data.password = hashed_password;
-    const user = await userRepository.create(data);
+    const finalRegisterData = await passwordHandling(data);
+    console.log("FINAL", finalRegisterData);
+    const user = await userRepository.create(finalRegisterData);
+    console.log("--------->", user);
 
     return this.login(email, password);
   },
 
   async login(email, password) {
+    console.log("USER111", email, password);
+
     const user = await userRepository.getByEmail(email);
+    console.log("USER", user);
+    // user is not returning
     const isValidPassword = await bcrypt.compare(password, user.password);
 
     if (!user || !isValidPassword) {
@@ -36,6 +41,7 @@ export const authService = {
     const rtoken = { refreshToken: refreshToken };
 
     //sending to backend databse
+    console.log("refresh token", rtoken);
 
     const updatedRT = await userService.update(user.id, rtoken);
     console.log(tokens, "...", updatedRT);
@@ -44,21 +50,17 @@ export const authService = {
 
   async refreshAccessToken(refreshToken) {
     const user = await userRepository.getByRefreshToken(refreshToken);
-    console.log("USER", user)
+    console.log("refresh access token USER", user);
     const userId = { id: user.id };
+    console.log("refresh access token user id", userId);
 
     //verification
-    const verification = await new Promise((resolve, reject) => {
-      jwt.verify(
-        refreshToken,
-        process.env.REFRESH_TOKEN_SECRET,
-        (err, user) => {
-          if (err) reject(err);
-          else resolve(user);
-        }
-      );
-    });
-    //here we create the access token (i have a question about this)
+    const verification = jwt.verify(
+      refreshToken,
+      process.env.REFRESH_TOKEN_SECRET
+    );
+    if (!verification)
+      throw new Error("Oops! Looks like you are in the wrong place!");
 
     const accessToken = generateTokens.generateAccessToken(userId);
     return { accessToken: accessToken };
@@ -67,7 +69,9 @@ export const authService = {
   async logout(refreshToken) {
     const user = await userRepository.getByRefreshToken(refreshToken);
     const nullToken = { refreshToken: null };
-    const logout_user = await userRepository.update(user.id, nullToken);
-    return logout_user;
+
+    console.log("logout user", user);
+    const logoutUser = await userRepository.update(user.id, nullToken);
+    return logoutUser;
   },
 };

@@ -1,8 +1,19 @@
-change naming convention
-userRepo.... done
-`user` in the pg 
+//update permissions in the same time (without deleting the entire unit) in rolePermissionAssignment table
+in repo roles
 
-migrations-> fix the mumbers and alter table to remove the null values done
 
-soft delete instead of delete is_active = false done
-fix error handling -> send to the pg (single function)
+when updating role: 
+{
+    name: "Admin",
+    permissions: [{id: 4}, {id:5}]
+}
+
+in that case you should go to the rpa table and get the current links, delete unmentioned roles and add the mentioned roles. 
+this should delete the unmentioned, add the new and keep the mentioned. 
+
+routes:
+/roles -> roles table
+/permissions -> permissions table
+/roles/:id/permissions -> permissions by id 
+
+

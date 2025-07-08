@@ -1,34 +1,33 @@
 import { query } from "../db.js";
 import updateHandling from "../utils/updateHandling.js";
 
-export const merchantRepository = {
-  async getAllMerchants() {
+export const rolesRepository = {
+  async getAllRoles() {
     const res = await query(
-      `SELECT * FROM merchant WHERE isActive = true ORDER BY id `
+      `SELECT * FROM role WHERE isActive = true ORDER BY id `
     );
     return res.rows;
   },
 
-  async getMerchantById(id) {
+  async getRoleById(id) {
     const res = await query(
-      `SELECT * FROM merchant WHERE id = $1 and isActive = true`,
+      `SELECT * FROM role WHERE id = $1 and isActive = true`,
       [id]
     );
     return res.rows[0];
   },
 
-  async createMerchant({ name }) {
+  async createRole({ name, merchantId }) {
     const res = await query(
-      `INSERT INTO merchant (name) VALUES ($1)
+      `INSERT INTO role (name, merchantId) VALUES ($1, $2)
         RETURNING *`,
-      [name]
+      [name, merchantId]
     );
     return res.rows[0];
   },
-
-  async updateMerchant(id, fields) {
+  async updateRole(id, fields) {
     const res = await query(
-      `UPDATE merchant SET ${updateHandling.setQuery(
+      `UPDATE role SET ${updateHandling.setQuery(
         fields
       )}, updatedAt = CURRENT_TIMESTAMP
             WHERE id = $1 RETURNING *`,
@@ -38,11 +37,11 @@ export const merchantRepository = {
     return res.rows[0];
   },
 
-  async deleteMerchant(id) {
-    await query(
-      `UPDATE merchant SET isActive = false WHERE id = $1 RETURNING *`,
-      [id]
-    );
+  async deleteRole(id) {
+    await query(`UPDATE role SET isActive = false WHERE id = $1 RETURNING *`, [
+      id,
+    ]);
     return { deleted: true, id };
   },
+  
 };
