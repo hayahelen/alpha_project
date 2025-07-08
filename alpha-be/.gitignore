@@ -1,0 +1,16 @@
+node_modules/
+
+# Environment variables
+.env*
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Dependency directories
+pids
+logs
+*.pid
+*.seed
+*.pid.lock
